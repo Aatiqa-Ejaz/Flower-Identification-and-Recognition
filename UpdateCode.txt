@@ -1,0 +1,38 @@
+# Following is the update made to code
+optimizer = RMSprop(lr=1e-4)
+objective = 'categorical_crossentropy'
+
+def flower_recognition():   
+    our_model = Sequential()
+#1st argument, set to 32 is output filter value, 2nd argument is the kernal size , 
+#3rd argument has batch, height, width, 4th argument is same to have padding results of output like that of input
+
+# 1: Convolution layer with 32 filter
+    our_model.add(Convolution2D(32, 3, 3, border_mode='same', input_shape=(1, ROWS, COLS), activation='relu'))
+    our_model.add(Convolution2D(32, 3, 3, border_mode='same', activation='relu'))
+    our_model.add(MaxPooling2D(pool_size=(2, 2), dim_ordering="th"))
+# 2 Convolution layer with 64 filter
+    our_model.add(Convolution2D(64, 3, 3, border_mode='same', activation='relu'))
+    our_model.add(Convolution2D(64, 3, 3, border_mode='same', activation='relu'))
+    our_model.add(MaxPooling2D(pool_size=(2, 2), dim_ordering="th"))   
+#3 Convolution layer with 128 filter
+    our_model.add(Convolution2D(128, 3, 3, border_mode='same', activation='relu'))
+    our_model.add(Convolution2D(128, 3, 3, border_mode='same', activation='relu'))
+    our_model.add(MaxPooling2D(pool_size=(2, 2), dim_ordering="th"))   
+#4 Convolution layer with 256 filter
+    our_model.add(Convolution2D(256, 3, 3, border_mode='same', activation='relu'))
+    our_model.add(Convolution2D(256, 3, 3, border_mode='same', activation='relu'))
+    our_model.add(Convolution2D(256, 3, 3, border_mode='same', activation='relu'))
+    our_model.add(MaxPooling2D(pool_size=(2, 2), dim_ordering="th"))
+#5 Convolution Layer with 512 filter
+    our_model.add(Convolution2D(512, 3, 3, border_mode='same', activation='relu'))
+    our_model.add(Convolution2D(512, 3, 3, border_mode='same', activation='relu'))
+    our_model.add(MaxPooling2D(pool_size=(2, 2), dim_ordering="th"))  
+
+    
+    our_model.add(Flatten())
+    our_model.add(Dense(256, activation='relu'))  
+    our_model.add(Dense(103, activation='softmax'))
+    our_model.compile(loss=objective, optimizer='adam', metrics=['accuracy']) 
+    return our_model
+our_model = flower_recognition()s
